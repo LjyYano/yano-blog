@@ -1,0 +1,1011 @@
+@use "globals" as *;
+
+html {
+  background-color: $body-color;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flow-root;
+  overflow-x: hidden;
+
+  // Mobile: white background for Safari status bar
+  background-color: $white;
+
+  // Desktop: gray background
+  @media #{$medium} {
+    background-color: $body-color;
+  }
+}
+
+iframe {
+  border: 0;
+}
+// Main
+// --------------------------------------------------
+#main {
+  min-height: calc(100vh - $menu-height);
+}
+
+.entry,
+.hentry {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  li {
+    word-wrap: break-word;
+  }
+}
+
+.hentry h1.entry-title,
+.hentry h2.entry-title {
+  font-size: 22px;
+  line-height: 1.35;
+  margin: 6px 0 8px;
+  // Step with the column: 30px against the 760px tablet card leaves a
+  // one-character orphan on the longer titles.
+  @media #{$medium} {
+    font-size: 26px;
+  }
+  @media #{$large} {
+    font-size: 30px;
+  }
+}
+
+.body-title {
+  display: block;
+}
+
+.entry-content {
+  font-size: 17px;
+  position: relative;
+  word-wrap: break-word;
+  margin-bottom: 12px;
+  text-autospace: ideograph-alpha ideograph-numeric;
+  @media #{$medium} {
+    font-size: 17px;
+  }
+  .page-info {
+    color: rgba(85, 85, 85, 0.8);
+    font-size: 15px;
+    font-weight: normal;
+    margin: -5px 2px 0;
+    position: relative;
+    time {
+      margin: 0 20px;
+    }
+    .qr-text {
+      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA9ElEQVRYR9VXWw7DIAwbN+Yo3HjTJqUfqSI/FNaWvwpIjeOYMOac75cw1lrjuzz2xXeEUOMNdcM2APkkmRR0YgSsincwcBsAOSXVyVRGgoEc78TAYwBk1SOm2hnYBqCyhJxzVgMonl0F7QBYM6ycL2uAjWc7IdIADYBdyDqjGu93sTij0oAaqzQiVNeVdaNqyfPXA6jEhHKunrRaf2gA5bTrh6fLSBWNygxab1cB8gFWpLYRdaXkPgB2tWSIKfs2ZDUgA3BbMreM23rCvwNwU5B9wWZgGwDUw7EvICS+mLerwM15+TBh7wS2J2T7CdsJXQ1k5j7FF35r3ynsoAAAAABJRU5ErkJggg==)
+        no-repeat;
+      background-size: 16px 16px;
+      width: 16px;
+      height: 16px;
+      display: none;
+      position: relative;
+      margin-bottom: -2px;
+      &::before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        bottom: -20px;
+        left: -20px;
+      }
+      &:hover {
+        .qr-code {
+          width: 128px;
+          opacity: 1;
+          transform: none;
+        }
+      }
+    }
+    .qr-code {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+      transform: scale(0.8);
+      width: 0;
+      left: -4px;
+      top: -4px;
+      z-index: 10;
+      will-change: opacity, transform;
+      pointer-events: none;
+      > img {
+        padding: 4px;
+        background-color: #fff;
+        border-radius: calc($border-radius / 2);
+      }
+    }
+    @media #{$medium} {
+      font-size: 17px;
+    }
+    // The QR only opens on hover, so a touch-only iPad would show a dead icon.
+    @media #{$medium} and (hover: hover) {
+      .qr-text {
+        display: inline-block;
+      }
+    }
+  }
+  h2 > a,
+  h3 > a,
+  h4 > a,
+  p > a,
+  strong > a,
+  li > a {
+    @include need-dotted();
+  }
+}
+
+.social-icon svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 12px;
+  display: inline-block;
+  margin-top: 3px;
+  @media #{$medium} {
+    margin-top: 4px;
+  }
+}
+
+.repo-time {
+  font-size: 17px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+///sections
+.content-header-title {
+  text-align: center;
+  margin: 30px 0 0;
+  h1 {
+    margin: 10px 20px;
+    font-weight: 700;
+    font-size: 22px;
+    color: #5c6469;
+    @media #{$medium} {
+      font-size: 30px;
+    }
+  }
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #8b9299;
+    @media #{$medium} {
+      font-size: 25px;
+    }
+  }
+  p {
+    color: #5c6469;
+  }
+}
+
+// Single Post and Page
+// --------------------------------------------------
+.entry-meta {
+  font-size: 13px;
+  margin-top: 0;
+  color: #c9ced4;
+  a {
+    color: #c9ced4;
+  }
+  .tag {
+    display: inline-block;
+    margin: 4px;
+    color: $white;
+    border-radius: calc($border-radius / 2);
+    background-color: $header-color;
+    span {
+      float: left;
+      padding: 2px 6px;
+    }
+    .count {
+      background-color: #fff;
+      color: $header-color;
+      border-top-right-radius: calc($border-radius / 2);
+      border-top-left-radius: 0px;
+      border-bottom-right-radius: calc($border-radius / 2);
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
+#post,
+#page {
+  #main {
+    margin: 60px 0 0 0;
+    background-color: $body-color;
+    @media #{$medium} {
+      margin: 0;
+      background-color: transparent;
+    }
+  }
+  .hentry {
+    background-color: $body-color;
+    padding-top: 15px;
+    @media #{$medium} {
+      background-color: transparent;
+      padding-top: 0;
+    }
+  }
+  .entry-content {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background-color: $white;
+    box-shadow: none;
+    @media #{$medium} {
+      width: calc(100% - #{$page-gutter * 2});
+      max-width: $page-width-tablet;
+      margin: 30px auto;
+      padding: 24px 44px;
+      border-radius: $border-radius;
+    }
+    @media #{$large} {
+      width: auto;
+      max-width: $page-width;
+      margin: 34px auto 34px auto;
+      padding: 32px 80px 70px;
+      > p:first-child {
+        font-size: 20px;
+      }
+    }
+  }
+  .giscus-container {
+    margin: 0 0 15px 0;
+    padding: 20px 15px;
+    background-color: $white;
+    @media #{$medium} {
+      width: calc(100% - #{$page-gutter * 2});
+      max-width: $page-width-tablet;
+      margin: 20px auto;
+      padding: 24px 44px;
+      border-radius: $border-radius;
+    }
+    @media #{$large} {
+      width: auto;
+      max-width: $page-width;
+      padding: 50px 80px;
+      margin: 0 auto;
+    }
+  }
+  .entry-meta {
+    margin: 10px 0 20px;
+  }
+}
+
+#post {
+  &.has-post-toc {
+    .entry-content h2,
+    .entry-content h3 {
+      scroll-margin-top: 104px;
+    }
+  }
+
+  .post-shell {
+    position: relative;
+  }
+
+  .post-toc {
+    display: none;
+  }
+
+  .post-toc-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 4px 0 0;
+  }
+
+.post-toc-nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 3px;
+    padding-top: 2px;
+  }
+
+  .post-toc-link {
+    display: block;
+    padding: 6px 6px;
+    border-radius: 10px;
+    color: rgba($text-color, 0.7);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.28;
+    text-decoration: none;
+    transition: color 0.2s ease, background-color 0.2s ease;
+
+    &:hover {
+      color: $header-color;
+    }
+
+    &.is-child {
+      padding-left: 16px;
+      color: rgba($text-color, 0.52);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &.is-active {
+      color: $header-color;
+      font-weight: 700;
+    }
+  }
+
+  .post-toc {
+    .post-toc-link {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+}
+
+// The reading column stays centred on the viewport at every width; the rail
+// lives in the right margin and only appears once that margin can hold it.
+// 94.25em (1508px) is where it first fits: a centred 900px column leaves
+// (W - 900) / 2 per side, and the rail needs $toc-rail plus $page-gutter, so
+// W / 2 + 734 <= W - 20. Below that the table of contents is simply hidden
+// (maintainer call: a centred column matters more than showing it on 1366 and
+// 1440). The earlier layout reserved $toc-rail on #main and .header-menu so
+// column and rail centred as a pair, which kept the rail on screen from 1344px
+// but pushed the column 142px left of centre at every desktop width.
+@media (min-width: 94.25em) {
+  #post.has-post-toc {
+    .post-shell {
+      max-width: $page-width;
+      margin: 34px auto;
+    }
+
+    .hentry {
+      padding-top: 0;
+    }
+
+    .entry-content {
+      max-width: $page-width;
+      margin: 0 auto;
+    }
+
+    .post-toc {
+      display: block;
+      position: absolute;
+      top: -4px;
+      left: calc(100% + #{$toc-gap});
+      width: $toc-width;
+      height: 100%;
+      min-height: 32px;
+    }
+
+    .post-toc-inner {
+      position: sticky;
+      top: 88px;
+    }
+
+    .post-followup {
+      max-width: $page-width;
+      margin: 0 auto;
+    }
+  }
+}
+
+.entry-tags {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.year-heading {
+  margin-top: 0;
+}
+
+// Permalink icon for link post
+.permalink {
+  margin-right: 7px;
+}
+
+// Post Pagination Module
+.pagination {
+  margin: 30px 0 30px 0;
+  text-align: center;
+  font-size: 18px;
+  @media #{$medium} {
+    margin: 40px 10px 30px;
+    font-size: 20px;
+  }
+  ul {
+    display: inline;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  li {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .current-page {
+    font-weight: 700;
+  }
+  .btn {
+    padding: 0 10px;
+    height: 40px;
+    line-height: 38px;
+    @media #{$medium} {
+      padding: 0 20px;
+    }
+  }
+}
+
+// Read More Module
+.read-more {
+  display: block;
+  position: relative;
+  margin: 40px 0 48px 0;
+  padding: 40px 15px 25px;
+  background-color: $white;
+  @media #{$medium} {
+    width: calc(100% - #{$page-gutter * 2});
+    max-width: $page-width-tablet;
+    margin: 40px auto 48px;
+    padding: 40px 44px 25px;
+    border-radius: $border-radius;
+  }
+  @media #{$large} {
+    width: auto;
+    max-width: $page-width;
+    padding: 50px 80px;
+    margin: 34px auto 48px;
+  }
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+.read-more-header {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 35px;
+  text-align: center;
+  .read-more-btn {
+    @include btn-base();
+  }
+}
+
+.read-more-content {
+  font-size: 17px;
+  margin-bottom: 0;
+  p {
+    text-align: left;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+  p > a,
+  li > a {
+    @include need-dotted();
+  }
+  h3 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.35;
+    @media #{$medium} {
+      font-size: 26px;
+    }
+    @media #{$large} {
+      font-size: 30px;
+    }
+    a {
+      color: $text-color;
+    }
+  }
+}
+
+.list-inline {
+  padding-left: 0;
+  margin-left: -5px;
+  list-style: none;
+}
+
+.list-inline > li {
+  display: inline-block;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+// Post Index
+// --------------------------------------------------
+#post-index {
+  #main {
+    margin: 60px 0 0 0;
+    overflow: hidden;
+    background-color: $body-color;
+    @media #{$medium} {
+      width: calc(100% - #{$page-gutter * 2});
+      max-width: $page-width-tablet;
+      margin: 20px auto;
+      background-color: transparent;
+    }
+    @media #{$large} {
+      width: auto;
+      max-width: $page-width;
+      margin: 34px auto 0;
+    }
+  }
+  article {
+    background-color: $white;
+    box-shadow: none;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    @media #{$medium} {
+      margin-top: 0;
+      margin-bottom: 30px;
+      border-radius: $border-radius;
+      padding: 24px 44px;
+    }
+    @media #{$large} {
+      margin-bottom: 34px;
+      padding: 30px 50px 20px;
+    }
+  }
+}
+
+// Footer
+// --------------------------------------------------
+.footer-wrapper {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  margin: 0 auto;
+  padding: 14px 0 30px;
+  text-align: center;
+  font-size: 15px;
+  background-color: $body-color;
+
+  @media #{$medium} {
+    padding: 8px 0 20px;
+    font-size: 17px;
+  }
+}
+
+// Browser Upgrade
+// --------------------------------------------------
+.upgrade {
+  padding: 10px;
+  text-align: center;
+}
+
+// Google Search
+// --------------------------------------------------
+#goog-fixurl {
+  ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+#goog-wm-qt {
+  width: auto;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  padding: 8px 20px;
+  display: inline-block;
+  font-size: 15px;
+  background-color: $white;
+  color: $text-color;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #91979f;
+  border-radius: calc($border-radius / 2);
+}
+
+#goog-wm-sb {
+  @include btn-base();
+}
+
+// Header
+.entry-header {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 260px;
+  background: $banner-bg;
+  display: none;
+  svg {
+    margin-top: 60px;
+  }
+  canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  @media #{$medium} {
+    display: block;
+  }
+}
+
+.header-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  overflow: hidden;
+  background-color: $menu-top;
+  height: $menu-height;
+  box-shadow: 0 0 0 0, 0 6px 12px rgba($black, 0.1);
+  padding: 0 15px; // Harmonized mobile padding
+  @media #{$medium} {
+    position: fixed;
+    padding: 0;
+    transition: transform 0.3s ease-out; // Use transform instead of height
+  }
+  ul {
+    margin: 0 auto;
+    list-style-type: none;
+    height: 100%;
+    padding: 0;
+  }
+}
+
+.header-menu-overflow {
+  @media #{$medium} {
+    transform: translateY(-100%); // Slide up out of view
+  }
+}
+
+.header-item.language-icon svg {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-top: 9px;
+  margin-right: 4px;
+  @media #{$medium} {
+    margin-top: 11px;
+  }
+}
+
+.header-item {
+  // Removed float: right in favor of flexbox in container
+  padding-left: 8px;
+  padding-right: 8px;
+  @media #{$medium} {
+    padding-left: 8px; // Specific padding for icons (Search, Language)
+    padding-right: 8px;
+  }
+
+  @media #{$large} {
+    // Only the now-rightmost language button should be flush
+    &.language-item {
+      margin-right: 0; // Remove margin
+      padding-right: 0 !important; // Force remove padding to touch edge
+    }
+  }
+  // Language button remains flush on all screens
+  &.language-item {
+    padding-right: 0 !important;
+  }
+  a {
+    vertical-align: middle;
+    display: block; // Changed from table-cell
+    font-size: 15px; // Increased from 14px
+    box-sizing: border-box;
+    font-weight: bold;
+    &:visited {
+      color: $text-color;
+    }
+    @media #{$medium} {
+      font-size: 16px; // Increased from 15px
+    }
+  }
+  &.active,
+  &:hover {
+    a {
+      color: $header-active;
+    }
+  }
+}
+
+.header-item-title {
+  // Container uses flexbox for alignment
+  border-top-width: 0px;
+  @media #{$medium} {
+    padding-left: 0;
+    padding-right: 20px;
+  }
+}
+
+// Left-side navigation items (About, Weekly)
+.header-item-left {
+  display: flex;
+  align-items: center;
+  padding-left: 10px; // Standardized for breathing room
+  padding-right: 10px;
+
+
+
+
+  // Hide "About" (First Item) on mobile
+  .header-item-title + & {
+    display: none;
+    @media #{$medium} {
+      display: flex; // Show on desktop
+      padding-left: 10px; // Reset padding
+    }
+  }
+
+  // Add spacing to "Weekly" (Second Item) on mobile
+  .header-item-title + & + & {
+    padding-left: 30px;
+    @media #{$medium} {
+      padding-left: 10px; // Reset to standard on desktop
+    }
+  }
+
+  @media #{$medium} {
+    padding-left: 10px; // Unified desktop breathing room
+    padding-right: 10px;
+  }
+
+  // Large gap between text links group and functional group on desktop
+  &.header-item-social:last-of-type {
+    @media #{$medium} {
+      margin-right: 20px;
+    }
+  }
+
+  a {
+    vertical-align: middle;
+    display: block; // Changed from table-cell
+    font-size: 15px; // Increased from 14px
+    box-sizing: border-box;
+    font-weight: bold;
+    position: relative;
+    top: 0; // Better vertical centering
+    &:visited {
+      color: $text-color;
+    }
+    @media #{$medium} {
+      font-size: 16px; // Increased from 15px
+    }
+  }
+  &.active,
+  &:hover {
+    a {
+      color: $header-active;
+    }
+  }
+}
+
+// Hide social links on mobile
+.header-item-social {
+  display: flex; // Show GitHub on mobile (First Social Item)
+
+  // Hide subsequent social items (Twitter) on mobile
+  & + & {
+    display: none;
+  }
+
+  @media #{$medium} {
+    display: block;
+    // Show all social items on desktop
+    & + & {
+      display: block;
+    }
+  }
+}
+
+///sections
+.logo {
+  width: $menu-height;
+  height: $menu-height;
+  float: left;
+  padding: 10px;
+}
+
+.header-item-container {
+  height: 100%;
+  display: flex; // Flex for modern layout control
+  align-items: center;
+  // Track the reading column so the logo and the language toggle sit on the
+  // same edges as the cards below instead of touching the screen.
+  @media #{$medium} {
+    width: calc(100% - #{$page-gutter * 2});
+    max-width: $page-width-tablet;
+    margin: 0 auto;
+  }
+  @media #{$large} {
+    width: auto;
+    max-width: $page-width;
+  }
+}
+
+.header-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.header-item-title {
+  float: left;
+  border-top-width: 0px;
+  height: 100%;
+  a.title {
+    font-size: 24px; // Slightly smaller for mobile
+    font-weight: 800; // Bolder
+    color: $base-color; // Normal Black
+    padding-left: 0;
+    display: flex; // Flex for perfect centering on all devices
+    align-items: center;
+    height: $menu-height;
+    @media #{$medium} {
+      font-size: 30px;
+      padding-left: 0;
+    }
+
+    .logo-img {
+      display: block; // Ensure image is displayed
+      border-radius: 50%;
+      margin-top: -2px;
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+    }
+  }
+}
+
+.header-href {
+  display: block;
+}
+
+.video-container,
+.keynote-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 24px;
+  height: 0;
+  overflow: hidden;
+  iframe,
+  object,
+  embed,
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.keynote-container {
+  padding-bottom: 50.4%;
+  background-color: #fff;
+  .fullscreen-btn {
+    display: none;
+    @include btn-base();
+    position: absolute;
+    right: 0;
+    font-size: 13px;
+    letter-spacing: 1px;
+    bottom: -20px;
+    height: 32px;
+    width: 60px;
+    line-height: 32px;
+    padding: 0 8px;
+    opacity: 0.3;
+    border-width: 0;
+  }
+  @media #{$medium} {
+    padding-bottom: 53.2%;
+    .fullscreen-btn {
+      display: block;
+    }
+  }
+}
+
+.coffee {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 0 20px;
+  position: relative;
+  @media #{$large} {
+    margin-bottom: -20px;
+  }
+  .buy-me-coffee {
+    @include btn-base();
+    margin: 0 auto;
+    position: relative;
+    padding: 0 18px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    &.active {
+      background-color: #fff;
+      color: #222;
+    }
+  }
+}
+
+.img-zoom {
+  @media #{$medium} {
+    cursor: zoom-in;
+  }
+}
+
+.lazyload,
+.lazyloading {
+  filter: blur(5px);
+  transition: filter 400ms;
+}
+
+.lazyloaded {
+  filter: blur(0);
+}
+
+.share-img {
+  margin: 0 auto;
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+}
+
+.video {
+  margin-block-end: 1em;
+}
+
+.bg-img {
+  padding: 10px 15px 15px;
+  background: #171f32;
+  margin-top: -2px;
+  @media #{$medium} {
+    padding: 10px 30px 30px;
+  }
+}
+
+video.bg-img {
+  margin-block-start: -1em;
+}
+
+.btn-arrow {
+  font-size: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  height: 42px;
+  line-height: 42px;
+}
+
+.video-border {
+  padding: 24px;
+  background: url(https://gw.alipayobjects.com/zos/k/0d/UpT4s7.png) no-repeat
+    center;
+}
+
+.entry-content img {
+  @media #{$medium} {
+    cursor: zoom-in;
+  }
+}

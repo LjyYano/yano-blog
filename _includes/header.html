@@ -1,0 +1,63 @@
+{% assign homeActive = 'active' %}
+{% if page.hideHomeActive %}
+{% assign homeActive = nil %}
+{% endif %}
+<div class="header-menu" id="J_header">
+  <ul class="header-item-container">
+    <li class="header-item-title {{ homeActive }}">
+      <a href="{{ '/' | relative_url }}" class="title">{{ site.title }}</a>
+    </li>
+
+    {% for menu in site.menu %}
+    {% assign class = nil %}
+    {% if page.url contains menu.url and menu.url != '/' %}
+    {% assign class = 'active' %}
+    {% endif %}
+
+    {% if menu.url contains 'http://' or menu.url contains 'https://' %}
+    <li class="header-item-left {{ class }}">
+      <a href="{{ menu.url }}" target="_blank" rel="noopener noreferrer">{{ menu.title }}</a>
+    </li>
+    {% else %}
+    <li class="header-item-left {{ class }}">
+      <a href="{{ menu.url | relative_url }}">{{ menu.title }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+
+    <li class="header-item search-btn-container">
+      <button id="search-btn" class="search-btn" aria-label="Search" title="Search (Press /)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+          <path d="M20 20L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+    </li>
+  </ul>
+</div>
+
+{% if page.poem %}
+  {% assign headerText = page.poem %}
+  {% assign fontSize = 42 %}
+  {% assign fontWeight = 400 %}
+  {% assign letterSpacing = 4 %}
+{% else %}
+  {% assign headerText = page.title | default: site.title %}
+  {% assign fontSize = 36 %}
+  {% assign fontWeight = 600 %}
+  {% assign letterSpacing = 1.2 %}
+{% endif %}
+{% assign typingMs = headerText | size | times: 170 | at_least: 800 | at_most: 3000 %}
+<div class="entry-header">
+  <svg width="100%" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="1.1" role="img" aria-label="{{ headerText }}">
+    <path id="svg-title-path">
+      <animate attributeName="d" from="m0,110 h80" to="m0,110 h1600" dur="{{ typingMs }}ms" repeatCount="1" fill="freeze" begin="0s" />
+    </path>
+    <text font-size="{{ fontSize }}" font-weight="{{ fontWeight }}" fill="#f3ebdb" x="50%" y="50%" text-anchor="middle"
+      word-spacing="2.0" letter-spacing="{{ letterSpacing }}">
+      <textPath xlink:href="#svg-title-path">{{ headerText }}</textPath>
+    </text>
+  </svg>
+  <canvas id="J_firework_canvas" aria-hidden="true" role="presentation"></canvas>
+</div>

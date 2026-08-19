@@ -1,0 +1,14 @@
+{% for post in include.posts %}
+  {% assign is_hidden = post.hidden | default: post.hide %}
+  {% if is_hidden != true %}
+    {% assign summary = post.summary | default: post.content | strip_html | strip_newlines | strip | truncate: 150 %}
+    <a href="{{ post.url | relative_url }}" rel="bookmark" title="{{ post.title | escape }}" itemprop="url" class="header-href">
+      <article class="hentry">
+        <h2 class="entry-title">{{ post.title }}</h2>
+        <div class="entry-content">
+          <span>【{{ post.date | date: "%Y-%m-%d" }}】</span>{{ summary }}
+        </div>
+      </article>
+    </a>
+  {% endif %}
+{% endfor %}

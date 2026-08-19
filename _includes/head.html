@@ -1,0 +1,98 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e8e8e8">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+
+  {% assign page_description = page.summary | default: site.description %}
+  <meta name="description" content="{{ page_description | strip_html | truncate: 160 }}">
+  <meta name="author" content="{{ site.author.name }}">
+  <meta name="robots" content="index, follow">
+  {% if page.tags %}
+  <meta name="keywords" content="{{ page.tags | join: ', ' }}">
+  {% endif %}
+
+  {% assign canonical_url = site.url | append: page.url %}
+  {% assign social_title = page.title | default: site.title %}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="alternate" hreflang="zh-CN" href="{{ canonical_url }}">
+
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:title" content="{{ social_title }}{% if page.title %} - {{ site.title }}{% endif %}">
+  <meta property="og:description" content="{{ page_description | strip_html | truncate: 160 }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  {% if page.feature %}
+  <meta property="og:image" content="{{ page.feature }}">
+  {% endif %}
+  {% if page.layout == 'post' %}
+  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+  <meta property="article:author" content="{{ site.author.name }}">
+  {% if page.categories %}<meta property="article:section" content="{{ page.categories | first }}">{% endif %}
+  {% endif %}
+
+  <meta name="twitter:card" content="{% if page.feature %}summary_large_image{% else %}summary{% endif %}">
+  <meta name="twitter:title" content="{{ social_title }}{% if page.title %} - {{ site.title }}{% endif %}">
+  <meta name="twitter:description" content="{{ page_description | strip_html | truncate: 160 }}">
+  {% if page.feature %}<meta name="twitter:image" content="{{ page.feature }}">{% endif %}
+  {% if site.twitter %}
+  <meta name="twitter:creator" content="@{{ site.twitter }}">
+  <meta name="twitter:site" content="@{{ site.twitter }}">
+  {% endif %}
+
+  <link rel="dns-prefetch" href="https://gw.alipayobjects.com">
+  <link rel="preconnect" href="https://gw.alipayobjects.com" crossorigin>
+
+  <link rel="stylesheet" href="{{ '/css/index.css' | relative_url }}?v={{ site.asset_version }}">
+  <link rel="preload" href="{{ '/css/jinkai.css' | relative_url }}?v={{ site.asset_version }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="{{ '/css/jinkai.css' | relative_url }}?v={{ site.asset_version }}">
+  </noscript>
+
+  <link href="{{ site.url }}/feed.xml" type="application/atom+xml" rel="alternate" title="{{ site.title }} Feed">
+
+  {% if page.layout == 'post' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ page.title | jsonify }},
+    "datePublished": "{{ page.date | date_to_xmlschema }}",
+    "author": {
+      "@type": "Person",
+      "name": {{ site.author.name | jsonify }},
+      "url": "{{ site.author.url }}",
+      "sameAs": ["https://github.com/{{ site.author.github }}"]
+    },
+    "description": {{ page_description | strip_html | truncate: 160 | jsonify }},
+    "mainEntityOfPage": "{{ canonical_url }}",
+    "url": "{{ canonical_url }}",
+    "inLanguage": "zh-CN"{% if page.feature %},
+    "image": "{{ page.feature }}"{% endif %}
+  }
+  </script>
+  {% elsif page.url == '/' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ site.title | jsonify }},
+    "url": "{{ site.url }}",
+    "description": {{ site.description | jsonify }},
+    "inLanguage": "zh-CN",
+    "author": {
+      "@type": "Person",
+      "name": {{ site.author.name | jsonify }},
+      "url": "{{ site.author.url }}",
+      "sameAs": ["https://github.com/{{ site.author.github }}"]
+    }
+  }
+  </script>
+  {% endif %}
+</head>

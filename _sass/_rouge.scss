@@ -1,0 +1,263 @@
+@use "globals" as *;
+
+$code-bg: #15141b;
+$code-fg: #edecee;
+$code-muted: #6d6d6d;
+$code-primary: #a277ff;
+$code-selection: rgba(61, 55, 94, 0.5);
+$code-green: #61ffca;
+$code-orange: #ffca85;
+$code-pink: #f694ff;
+$code-blue: #82e2ff;
+$code-red: #ff6767;
+
+.highlight {
+  position: relative;
+  margin-bottom: 1.5em;
+  overflow: hidden;
+  box-shadow: none !important;
+  border-radius: 8px;
+  background-color: $code-bg;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  .highlight-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 12px;
+    background-color: $code-bg;
+    border-bottom: 0.5px solid rgba(237, 236, 238, 0.06);
+
+    .highlight-dots {
+      display: flex;
+      gap: 6px;
+
+      span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transition: transform 0.2s ease;
+
+        &.dot-red {
+          background: linear-gradient(135deg, #ff7f7f 0%, #ff6767 100%);
+        }
+
+        &.dot-yellow {
+          background: linear-gradient(135deg, #ffd7a6 0%, #ffca85 100%);
+        }
+
+        &.dot-green {
+          background: linear-gradient(135deg, #8bffe0 0%, #61ffca 100%);
+        }
+
+        &:hover {
+          transform: scale(1.08);
+        }
+      }
+    }
+
+    .highlight-lang {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      color: rgba(237, 236, 238, 0.64);
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      user-select: none;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .copy-btn {
+      padding: 0 6px;
+      border-radius: 4px;
+      color: rgba(237, 236, 238, 0.62);
+      font-size: 11px;
+      cursor: pointer;
+      transition: color 0.2s ease, background-color 0.2s ease;
+
+      &:hover {
+        color: $code-fg;
+        background-color: rgba(162, 119, 255, 0.12);
+      }
+    }
+  }
+
+  pre {
+    margin: 0;
+    padding: 15px 18px 18px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.75;
+    border-radius: 0;
+    background-color: transparent;
+    color: $code-fg;
+    user-select: text;
+
+    code {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      white-space: pre;
+    }
+
+    &::selection,
+    code::selection,
+    span::selection {
+      background-color: $code-selection;
+      color: inherit;
+    }
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(237, 236, 238, 0.06);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(162, 119, 255, 0.32);
+      border-radius: 999px;
+
+      &:hover {
+        background: rgba(162, 119, 255, 0.45);
+      }
+    }
+  }
+
+  .lineno {
+    padding-right: 24px;
+    color: rgba(237, 236, 238, 0.45);
+  }
+
+  .hll {
+    background-color: rgba(162, 119, 255, 0.12);
+  }
+
+  .c,
+  .cm,
+  .cp,
+  .c1,
+  .cs {
+    color: $code-muted;
+    font-style: italic;
+  }
+
+  .err {
+    color: $code-red;
+    background-color: rgba(255, 103, 103, 0.12);
+  }
+
+  .k,
+  .kc,
+  .kd,
+  .kp,
+  .kr,
+  .kt {
+    color: $code-primary;
+  }
+
+  .kn,
+  .o,
+  .ow {
+    color: $code-pink;
+  }
+
+  .p,
+  .dl,
+  .w {
+    color: rgba(237, 236, 238, 0.72);
+  }
+
+  .n,
+  .ni,
+  .nl,
+  .nn,
+  .nv,
+  .py,
+  .bp,
+  .vc,
+  .vg,
+  .vi,
+  .vm {
+    color: $code-fg;
+  }
+
+  .na,
+  .nb,
+  .no,
+  .nd {
+    color: $code-blue;
+  }
+
+  .nc,
+  .ne,
+  .nf,
+  .fm,
+  .nx {
+    color: $code-green;
+  }
+
+  .nt {
+    color: $code-pink;
+  }
+
+  .l,
+  .ld,
+  .m,
+  .mb,
+  .mf,
+  .mh,
+  .mi,
+  .mo,
+  .il,
+  .se {
+    color: $code-orange;
+  }
+
+  .s,
+  .sa,
+  .sb,
+  .sc,
+  .sd,
+  .s1,
+  .s2,
+  .sh,
+  .si,
+  .sx,
+  .sr,
+  .ss {
+    color: $code-green;
+  }
+
+  .gd {
+    color: $code-red;
+  }
+
+  .gi {
+    color: $code-green;
+  }
+
+  .gh,
+  .gu {
+    color: $code-blue;
+    font-weight: 600;
+  }
+
+  .ge {
+    font-style: italic;
+  }
+
+  .gs {
+    font-weight: bold;
+  }
+}

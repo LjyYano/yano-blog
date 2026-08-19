@@ -1,0 +1,152 @@
+# Site Information
+title: Yano
+description: "Yano 的个人博客，记录 AI、编程、产品、读书、游戏与生活。"
+url: https://yano.blog
+baseurl: ""
+repo: LjyYano/yano-blog
+lang: zh-CN
+encoding: utf-8
+timezone: Asia/Shanghai
+
+# Author Information
+author:
+  name: Yano
+  url: https://yano.blog
+  twitter: yano82895800
+  github: LjyYano
+
+# Social Media and External URLs
+github: LjyYano
+twitter: yano82895800
+menu:
+  - title: "Weekly"
+    url: "https://weekly.yano.blog/"
+  - title: "GitHub"
+    url: "https://github.com/LjyYano"
+  - title: "Twitter"
+    url: "https://x.com/yano82895800"
+  - title: "About"
+    url: "/about.html"
+
+# Build Settings
+paginate: 10
+post_ext: md
+page_ext: md
+post_layout: post
+page_layout: page
+titlecase: true
+future: true
+highlighter: rouge
+markdown: kramdown
+permalink: /:year-:month-:day/:title.html
+sass:
+  sass_dir: _sass
+  style: compressed
+
+webrick:
+  headers:
+    "Access-Control-Allow-Origin": "*"
+    "Access-Control-Allow-Methods": "GET, OPTIONS"
+    "Access-Control-Allow-Headers": "Content-Type, X-Requested-With"
+
+include: [".htaccess"]
+exclude:
+  [
+    "Gemfile",
+    "Gemfile.lock",
+    "README.md",
+    "LICENSE",
+    "package.json",
+    "node_modules",
+    "SEO_GUIDE.md",
+    "CLAUDE.md",
+  ]
+
+plugins:
+  - jekyll-paginate
+  - jekyll-pdf-embed
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Content defaults
+defaults:
+  - scope:
+      path: "_posts/AI"
+      type: "posts"
+    values:
+      layout: post
+      categories:
+        - AI
+
+  - scope:
+      path: "_posts/AI/2025-10-22-MCP-原理及-Java-开发指南.md"
+      type: "posts"
+    values:
+      title: "MCP 原理及 Java 开发指南"
+
+  - scope:
+      path: "_posts/AI/2025-12-13-ChatGPT-5.1-Thinking-的两个案例.md"
+      type: "posts"
+    values:
+      title: "ChatGPT 5.1 Thinking 的两个案例"
+      hide_post_title: true
+
+  - scope:
+      path: "_posts/AI/2025-12-14-AI-论文资料.md"
+      type: "posts"
+    values:
+      title: "AI 论文资料"
+
+  - scope:
+      path: "_posts/AI/2025-12-14-Agent-原理.md"
+      type: "posts"
+    values:
+      title: "Agent 原理"
+
+  - scope:
+      path: "_posts/AI/2025-12-20-Notion-AI-初体验.md"
+      type: "posts"
+    values:
+      title: "Notion AI 初体验"
+      hide_post_title: true
+
+  - scope:
+      path: "_posts/AI/2025-12-22-Skill-让-Agent-变得可复用可控可演进.md"
+      type: "posts"
+    values:
+      title: "Skill：让 Agent 变得可复用、可控、可演进"
+      hide_post_title: true
+
+  - scope:
+      path: "images/**/*"
+    values:
+      sitemap: false
+  - scope:
+      path: "js/**/*"
+    values:
+      sitemap: false
+  - scope:
+      path: "css/**/*"
+    values:
+      sitemap: false
+  - scope:
+      path: "_sass/**/*"
+    values:
+      sitemap: false
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      sitemap:
+        priority: 0.8
+        changefreq: weekly
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      sitemap:
+        priority: 0.6
+        changefreq: monthly
+
+showBuyCoffee: false
+defaultImage: data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==

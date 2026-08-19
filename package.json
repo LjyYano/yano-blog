@@ -1,0 +1,18 @@
+{
+  "name": "yano-blog",
+  "author": "Yano",
+  "homepage": "https://yano.blog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LjyYano/yano-blog"
+  },
+  "bugs": {
+    "url": "https://github.com/LjyYano/yano-blog/issues"
+  },
+  "scripts": {
+    "prep": "bundle install",
+    "dev": "bundle exec jekyll serve --watch --trace",
+    "start": "npm run dev",
+    "build": "bundle exec jekyll build"
+  }
+}

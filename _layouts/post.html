@@ -1,0 +1,36 @@
+---
+layout: base
+body_id: post
+---
+
+<div class="post-shell">
+  <article class="hentry">
+    <div class="entry-content heti">
+      {% unless page.hide_post_title %}
+      <h1 class="post-title entry-title">{{ page.title }}</h1>
+      {% endunless %}
+      <h4 class="page-info">
+        <span>Categories: {{ page.categories }}</span>
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
+        <div class="qr-text" id="J_qr_text">
+          <div id="J_qr_code" class="qr-code" aria-label="QR code for this page" role="img"></div>
+        </div>
+      </h4>
+      {{ content | cdn_image_filter }}
+      {% include buy-me-coffee.html %}
+    </div>
+  </article>
+
+  <aside class="post-toc" id="J_post_toc" hidden aria-label="On this page">
+    <div class="post-toc-inner">
+      <nav class="post-toc-nav" id="J_post_toc_nav"></nav>
+    </div>
+  </aside>
+</div>
+
+<div class="post-followup">
+  {% include giscus.html %}
+  {% include read-more.html %}
+</div>
+
+{% include mermaid.html %}

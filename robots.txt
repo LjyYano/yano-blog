@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /_site/
+Disallow: /.git/
+
+Sitemap: https://yano.blog/sitemap.xml
