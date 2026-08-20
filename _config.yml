@@ -12,19 +12,19 @@ timezone: Asia/Shanghai
 author:
   name: Yano
   url: https://yano.blog
-  twitter: yano82895800
+  twitter: yanobuilds
   github: LjyYano
 
 # Social Media and External URLs
 github: LjyYano
-twitter: yano82895800
+twitter: yanobuilds
 menu:
   - title: "Weekly"
     url: "https://weekly.yano.blog/"
   - title: "GitHub"
     url: "https://github.com/LjyYano"
   - title: "Twitter"
-    url: "https://x.com/yano82895800"
+    url: "https://x.com/yanobuilds"
   - title: "About"
     url: "/about.html"
 
