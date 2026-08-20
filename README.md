@@ -23,6 +23,7 @@ npm run build
 
 - Blog: https://yano.blog
 - GitHub: https://github.com/LjyYano
+- X: https://x.com/yanobuilds
 
 ## Theme
 
